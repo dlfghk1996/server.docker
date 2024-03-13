@@ -25,6 +25,7 @@ pipeline {
         stage('Build Gradle') {
             steps {
                 sh 'echo "=== Build Gradle Start ==="'
+                sh 'chmod +x ./gradlew'
                 sh './gradlew clean build -x test'
             }
             post {
