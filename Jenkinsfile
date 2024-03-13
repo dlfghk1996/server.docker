@@ -20,4 +20,29 @@ pipeline {
             }
         }
     }
+
+    // gradle build&Test
+    stage('Build Gradle') {
+        steps {
+            sh 'echo "=== Build Gradle Start ==="'
+            sh './gradlew clean build -x test'
+        }
+        post {
+            failure {
+                sh 'echo "Build Gradle Fail"'
+            }
+        }
+    }
+
+    // Docker Hub 에 이미지 푸시
+    stage('Docker Hub Image build & Push') {
+        steps {
+          sh 'echo "Docker Hub Image Push Start"'
+          docker.withRegistry('', 'docker') {
+              def customImage = docker.build("1hwazz/springboot:${env.BUILD_ID}")
+              customImage.push()
+           }
+        }
+    }
 }
+
