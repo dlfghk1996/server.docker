@@ -7,8 +7,8 @@ pipeline {
         stage('Git Checkout') {
             steps {
                 sh 'echo "=== Git Clone ==="'
-                git branch: 'master'
                 git credentialsId: 'Github',
+                    branch: 'master',
                     url: 'https://github.com/dlfghk1996/server.docker.git'
             }
 
